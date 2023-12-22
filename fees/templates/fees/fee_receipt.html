@@ -1,0 +1,197 @@
+{% load static %}
+<html>
+
+<head>
+    <title>Student ID of {{fee.name}} - {{fee.id}}
+    </title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery.qrcode.min.js' %}"></script>
+</head>
+
+
+<style>
+    .container {
+        position: absolute;
+        top: 70%;
+        left: 115px;
+        right: 10%;
+        height: 70%;
+        /* border: 1px solid #000; */
+    }
+    
+    .container #qrcode {
+        position: absolute;
+        top: -230px;
+        left: 480px;
+    }
+    
+    .container #qrcode img {
+        width: 80px;
+    }
+    
+    .profileImage {
+        position: absolute;
+        right: 560px;
+        top: 170px;
+    }
+    
+    .container .center-head {
+        position: absolute;
+        bottom: 7%;
+        right: 12%;
+    }
+    
+    .container .stdname {
+        position: absolute;
+        left: 180px;
+        top: -19%;
+        font-size: 35px;
+        font-weight: bold;
+        font-family: 'Roboto', sans-serif;
+    }
+    
+    .container .id {
+        position: absolute;
+        left: 310px;
+        top: -33%;
+        font-size: 35px;
+        font-weight: bold;
+        font-family: 'Roboto', sans-serif;
+    }
+    
+    .container .paid {
+        position: absolute;
+        left: 260px;
+        top: -1%;
+        font-size: 35px;
+        font-weight: bold;
+        font-family: 'Roboto', sans-serif;
+    }
+    
+    .container .stdaddress {
+        position: absolute;
+        left: 660px;
+        top: -19%;
+        font-size: 35px;
+        font-weight: bold;
+        font-family: 'Roboto', sans-serif;
+    }
+    
+    .container .date {
+        position: absolute;
+        left: 540px;
+        top: -32%;
+        font-size: 32px;
+        font-family: 'Roboto', sans-serif;
+    }
+    
+    .container .total {
+        position: absolute;
+        left: 880px;
+        top: -1%;
+        font-size: 32px;
+        font-family: 'Roboto', sans-serif;
+    }
+    
+    .container .code {
+        position: absolute;
+        left: 930px;
+        top: -32%;
+        font-size: 32px;
+        font-family: 'Roboto', sans-serif;
+    }
+    
+    @media print {
+        .container {
+            top: 27%;
+            left: 20%;
+            right: 25%;
+            height: 56%;
+        }
+        .container .id {
+            top: -122px;
+            left: 45px;
+            font-size: 17px;
+        }
+        .container .stdname {
+            top: -85px;
+            left: -3px;
+            font-size: 15px;
+        }
+        .container .paid {
+            top: -45px;
+            left: 20px;
+            font-size: 15px;
+        }
+        .container .stdaddress {
+            top: -85px;
+            left: 240px;
+            font-size: 15px;
+        }
+        .container .total {
+            top: -50px;
+            left: 240px;
+            font-size: 15px;
+        }
+        .container .date {
+            top: -119px;
+            left: 170px;
+            font-size: 15px;
+            word-wrap: normal;
+            word-break: normal;
+            white-space: nowrap;
+        }
+        .container .total {
+            top: -46px;
+            left: 308px;
+            font-size: 15px;
+        }
+        .container .code {
+            top: -120px;
+            left: 390px;
+            font-size: 15px;
+            word-wrap: normal;
+            word-break: normal;
+            white-space: nowrap;
+        }
+    }
+</style>
+
+
+<body style="margin: 0;">
+
+    <div style="margin: 0;" class="background">
+        <img src="{% static 'img/fee-recipt.png' %}" id="imgh" style="width:100%; position: absolute;" />
+
+
+
+        <div class="container ">
+            <div class="id-container">
+                <span class="stdname"><span>{{fee.student.name}}</span></span>
+                <span class="id"><span>{{fee.receipt_no}}</span></span>
+                <span class="paid"><span>{{fee.fee}}</span></span>
+                <span class="total"><span>{{fee.total_amount}} </span></span>
+                <span class="stdaddress"><span style="white-space: nowrap;">{{fee.student.address}}</span></span>
+                <span class="date"><span>{{fee.date}}</span></span>
+                <span class="code"><span>{{fee.student.code}}</span></span>
+
+            </div>
+        </div>
+
+
+    </div>
+
+    </div>
+    <script>
+        $(function () {
+
+            print()
+
+          })
+    </script>
+</body>
+
+</html>
+
+</html>

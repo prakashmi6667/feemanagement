@@ -1,0 +1,107 @@
+{% extends 'FranchiseBase.html' %}{% load static %} {% load course_filter %} {% load widget_tweaks %} {% block styleArea %}
+<style></style>
+<link href="{% static 'plugins/ladda/ladda-themeless.min.css' %}" rel="stylesheet" /> {% endblock %} {% block contentArea %}
+<div></div>
+
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+        <!-- BEGIN PAGE HEADER-->
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="#">Home</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <a href="#">Course</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <span>Assign Course</span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        <!-- BEGIN PAGE TITLE-->
+        <h1 class="page-title">Assign Course List</h1>
+        <!-- END PAGE TITLE-->
+        <div class="row">
+            <div id="objReport"></div>
+            <div class="col-md-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-body form">
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <div class="col-md-6 pull-right">
+                                    <form action="" method="GET">
+                                        <div class="input-group">
+                                            <input type="text" required name="query" value="{{query}}" placeholder="eg. Name" class="form-control" />
+                                            <span class="input-group-btn">
+                                                <input type="submit" class="btn btn-primary" value="Search"
+                                                    id="btnSeach" />
+                                                <a href="{% url 'courses:Assign_course_list' %}" class="btn btn-danger"
+                                                    value="Clear">Clear</a>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-12 form-group table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>S. No</th>
+                                            <th>Name</th>
+                                            <th>Durations</th>
+                                            <th>Fees</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for dt in data %}
+                                        <tr>
+                                            <form action="" method="post">
+                                                {% csrf_token%}
+                                                <input type="hidden" name="franchise" value="{{session.franchise__pk}}">
+                                                <input type="hidden" name="course" value="{{dt.id}}">
+                                                <td>{{forloop.counter}}</td>
+                                                <td>
+                                                    <a href="{% url 'students:Leave_request_edit' dt.id %}">{{dt.name}}
+                                                        <br>{{dt.code}}
+                                                    </a>
+                                                </td>
+                                                <td>{{dt.duration}}</td>
+                                                <td><input type="text" name="fee" value="{{dt.assigncourse_set.all|course:session.franchise__pk}}" id="">
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group mb-3 ml-1">
+                                                        <button class="btn btn-primary">Update</button>
+                                                    </div>
+                                                </td>
+                                            </form>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %} {% block scriptArea %}
+<script></script>
+<script>
+    $(document).ready(function() {
+        $('.req').append('<span style="color:red; ">&nbsp;&nbsp;*</span>');
+        $('.nreq').append('<span style="color:red; ">&nbsp;&nbsp;</span>');
+    });
+</script>
+
+<script src="{% static 'plugins/ladda/spin.min.js' %} "></script>
+<script src="{% static 'plugins/ladda/ladda.min.js' %} "></script>{% endblock %}

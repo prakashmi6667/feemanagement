@@ -1,0 +1,264 @@
+{% extends 'StudentBase.html' %}{% load static %} {% load widget_tweaks %} {% block styleArea %}
+<style></style>
+<link href="{% static 'plugins/ladda/ladda-themeless.min.css' %}" rel="stylesheet" />
+<link href="{% static 'css/bootstrap-select.css' %}" rel="stylesheet" />{% endblock %} {% block contentArea %}
+<div></div>
+
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+        <!-- BEGIN PAGE HEADER-->
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="#">Home</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <a href="#">Student</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <span>Profile</span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        <!-- BEGIN PAGE TITLE-->
+        <h1 class="page-title">
+            Student Profile
+            <small></small>
+        </h1>
+        <!-- END PAGE TITLE-->
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab_1_1">
+                {% if student %}
+                <div class="row">
+                    <div class="col-md-3">
+                        <ul class="list-unstyled profile-nav">
+                            <li>
+                                <img src="{{student.profile_image.url}}" class="img-responsive pic-bordered" alt="" />
+                                <!-- <a href="javascript:;" class="profile-edit"> edit <span>hello</span> </a> -->
+                                <h2>Basic Details</h2>
+                            </li>
+                            <li>
+
+                            </li>
+                            <li>
+                                <h5><b>Father Name -</b><span>&nbsp; {{student.father_name}}</span></h5>
+                            </li>
+                            <li>
+                                <h5><b>Mobile No. -</b><span>&nbsp; {{student.mobile_no}}</span></h5>
+                            </li>
+                            <li>
+                                <h5><b>Mother Name -</b><span>&nbsp; {{student.mother_name}}</span></h5>
+                            </li>
+                            <li>
+                                <h5><b>Email -</b><span>&nbsp; {{student.email}}</span></h5>
+                            </li>
+                            <li>
+                                <h5><b>Address -</b><span>&nbsp; {{student.address}}</span></h5>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-md-9 profile-info">
+                                <h2 class="font-green sbold uppercase">{{student.name}}-{{student.code}}</h2>
+                                <p><b>{{student.course}}-[{{student.course.code}}]</b></p>
+                                <p>
+                                    <a href="#"> <span class="tooltips" data-style="default" data-container="body" data-original-title="{{student.password}}"></span>{{student.email}}
+                                        </span>
+                                    </a>
+                                    <br>
+                                    <span><span>Password :</span>{{student.password}}</span>
+                                </p>
+                                <ul class="list-inline">
+                                    <li>
+                                        <i class="fa fa-calendar"></i><b>Joining date : </b><span>{{student.join_date}}</span> </li>
+                                    <li>
+                                        <i class="fa fa-calendar"></i><b>Pass Out date : </b><span>{{student.pass_out_date}}</span></li>
+
+                                </ul>
+                            </div>
+                            <!--end col-md-8-->
+
+                        </div>
+                        <!--end row-->
+                        <div class="tabbable-line tabbable-custom-profile">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#tab_1_11" data-toggle="tab"> Fee Installment</a>
+                                </li>
+                                <!-- <li>
+                                    <a href="#tab_1_22" data-toggle="tab"> fshfhfhfhfhhfh </a>
+                                </li>
+                                <li>
+                                    <a href="#tab_1_33" data-toggle="tab"> Examination Report </a>
+                                </li>
+                                <li> -->
+                                <!-- <a href="#tab_1_44" data-toggle="tab"> Rank Report </a>
+                                </li> -->
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_1_11">
+                                    <div class="portlet-body">
+                                        <table class="table table-striped table-bordered table-advance table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <i class="fa fa-calendar"></i> Date </th>
+                                                    <th class="hidden-xs">
+                                                        <i class="fa fa-bookmark"></i> Fee </th>
+                                                    <th class="hidden-xs">
+                                                        <i class="fa fa-bookmark"></i> discount </th>
+                                                    <th>
+                                                        <i class="fa fa-bookmark"></i> Fine </th>
+                                                    <th>
+                                                        <i class="fa fa-bookmark"></i> Total </th>
+                                                    <th>
+                                                        <i class="fa fa-bookmark"></i> Receipt No. </th>
+                                                    <th>
+
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% if fee %}{% for fe in fee %}
+                                                <tr>
+                                                    <td>
+                                                        <a href="javascript:;"> {{fe.date}}</a>
+                                                    </td>
+                                                    <td> {{fe.paid_amount}}</td>
+                                                    <td> {{fe.discount}} </td>
+                                                    <td>
+                                                        <span class="label label-danger label-sm"> {{fe.fine}} </span>
+                                                    </td>
+                                                    <td>
+                                                        {{fe.total_amount}}
+                                                    </td>
+                                                    <td>
+                                                        <a href="{% url 'fees:fee_receipt' fe.id %}"  target="_blank">Print</a>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}{% endif %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!--tab-pane-->
+                                <!-- <div class="tab-pane" id="tab_1_22">
+                                    <div class="portlet-body">
+                                        <h1>%%%%%%%%%%%%%%</h1>
+                                        <!-- <table class="table table-striped table-bordered table-advance table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <i class="fa fa-calendar"></i> Date </th>
+                                                    <th class="hidden-xs">
+                                                        <i class="fa fa-bookmark"></i> Fee </th>
+                                                    <th class="hidden-xs">
+                                                        <i class="fa fa-bookmark"></i> discount </th>
+                                                    <th>
+                                                        <i class="fa fa-bookmark"></i> Fine </th>
+                                                    <th>
+                                                        <i class="fa fa-bookmark"></i> Total </th>
+                                                    <th>
+                                                        <i class="fa fa-bookmark"></i> Receipt No. </th>
+                                                    <th> </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% if fee %}{% for fe in fee %}
+                                                <tr>
+                                                    <td>
+                                                        <a href="javascript:;"> {{fe.date}}</a>
+                                                    </td>
+                                                    <td> {{fe.paid_amount}}</td>
+                                                    <td> {{fe.discount}} </td>
+                                                    <td>
+                                                        <span class="label label-danger label-sm"> {{fe.fine}} </span>
+                                                    </td>
+                                                    <td>
+                                                        {{fe.total_amount}}
+                                                    </td>
+                                                    <td>
+                                                        {{fe.receipt_no}}
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}{% endif %}
+                                            </tbody>
+                                        </table> -->
+                            </div>
+                        </div>
+                        <!--tab-pane-->
+                        <!-- <div class="tab-pane" id="tab_1_33">
+                                    <div class="portlet-body">
+                                        <table class="table table-striped table-bordered table-advance table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <i class="fa fa-calendar"></i> Date </th>
+                                                    <th class="hidden-xs">
+                                                        <i class="fa fa-bookmark"></i> Practical </th>
+                                                    <th>
+                                                        <i class="fa fa-bookmark"></i> Theory </th>
+                                                    <th>
+                                                        <i class="fa fa-bookmark"></i> Total </th>
+                                                    <th> </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <a href="javascript:;">{{ certificate.issue_date }}</a>
+                                                    </td>
+                                                    <td class="hidden-xs">{{ certificate.practical_marks }} </td>
+                                                    <td>
+                                                        {{ certificate.theory_marks }}
+                                                    </td>
+                                                    <td>
+                                                        {{ certificate.total_obtained_marks }} / {{ certificate.total_marks }}
+                                                    </td>
+
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div> -->
+                        <!--tab-pane-->
+                        <!-- <div class="tab-pane" id="tab_1_44">
+                                    <div class="portlet-body">
+                                        <h1>--------------</h1>
+                                    </div>
+                                </div> -->
+                        <!--tab-pane-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <!--tab_1_2-->
+</div>
+</div>
+</div>
+
+{% endblock %} {% block scriptArea %}
+<script></script>
+<script src="{% static 'lib/district.js' %}"></script>
+<script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        $('.req').append('<span style="color:red;">&nbsp;&nbsp;*</span>');
+        $('.nreq').append('<span style="color:red;">&nbsp;&nbsp;</span>');
+    });
+    $('select').selectpicker({
+        'liveSearch': true
+    });
+</script>
+<script src="{% static 'lib/helper.js' %}"></script>
+<script src="{% static 'plugins/ladda/spin.min.js' %}"></script>
+<script src="{% static 'plugins/ladda/ladda.min.js' %}"></script>{% endblock %}

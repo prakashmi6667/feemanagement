@@ -1,0 +1,272 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>UTEC</title>
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'websites/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Full Calender CSS -->
+    <link href="{% static 'websites/css/fullcalendar.css' %}" rel="stylesheet">
+    <!-- Owl Carousel CSS -->
+    <link href="{% static 'websites/css/owl.carousel.css' %}" rel="stylesheet">
+    <!-- Pretty Photo CSS -->
+    <link href="{% static 'websites/css/prettyPhoto.css' %}" rel="stylesheet">
+    <!-- Bx-Slider StyleSheet CSS -->
+    <link href="{% static 'websites/css/jquery.bxslider.css' %}" rel="stylesheet">
+    <!-- Font Awesome StyleSheet CSS -->
+    <link href="{% static 'websites/css/font-awesome.min.css' %}" rel="stylesheet">
+    <!-- DL Menu CSS -->
+    <link href="{% static 'websites/js/dl-menu/component.css' %}" rel="stylesheet">
+    <link href="{% static 'websites/svg/style.css' %}" rel="stylesheet">
+    <!-- Widget CSS -->
+    <link href="{% static 'websites/css/widget.css' %}" rel="stylesheet">
+    <!-- Typography CSS -->
+    <link href="{% static 'websites/css/typography.css' %}" rel="stylesheet">
+    <!-- Shortcodes CSS -->
+    <link href="{% static 'websites/css/shortcodes.css' %}" rel="stylesheet">
+    <!-- Custom Main StyleSheet CSS -->
+    <link href="{% static 'websites/css/style.css' %}" rel="stylesheet">
+    <!-- Color CSS -->
+    <link href="{% static 'websites/css/color.css' %}" rel="stylesheet">
+    <!-- Responsive CSS -->
+    <link href="{% static 'websites/css/responsive.css' %}" rel="stylesheet">
+    <!-- SELECT MENU -->
+    <link href="{% static 'websites/css/selectric.css' %}" rel="stylesheet">
+    <!-- SIDE MENU -->
+    <link rel="stylesheet" href="{% static 'websites/css/jquery.sidr.dark.css' %}"> {% block stylearea %}{% endblock %}
+</head>
+
+<body>
+
+
+
+
+
+
+    <!--HEADER START-->
+    <header id="header_2">
+        <!--kode top bar start-->
+        <div class="top_bar_2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="pull-left">
+                            <em class="contct_2"><i class="fa fa-phone"></i> Call Us  On +91 972-045-6052</em>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+
+                        <ul class="login_wrap">
+                            <li><a href="{% url 'website:franchiseregistration' %}"><i class="fa fa-user"></i>Franchise Register</a></li>
+                            <li><a href="{% url 'franchises:login' %}"><i class="fa fa-sign-in"></i>Franchise Login</a></li>
+                        </ul>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--kode top bar end-->
+
+        <!--kode navigation start-->
+        <div class="kode_navigation">
+            <div id="mobile-header">
+                <a id="responsive-menu-button" href="#sidr-main"><i class="fa fa-bars"></i></a>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="logo_wrap">
+                            <a href="#"><img src="{% static 'websites/images/icon/logo-wide.png' %}" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <!--kode nav_2 start-->
+                        <div class="nav_2" id="navigation">
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="{% url 'website:about' %}">About Us</a></li>
+                                <li><a href="{% url 'website:course' %}">Course</a></li>
+                                <li><a href="{% url 'website:student' %}">Student</a></li>
+                                <li><a href="{% url 'website:franchise' %}">Franchise</a></li>
+                                <li><a href="{% url 'website:gallery' %}">Gallery</a></li>
+                                <li><a href="{% url 'website:blog' %}">Blog</a></li>
+                                <li><a href="{% url 'website:contact' %}">Contact US</a></li>
+
+                            </ul>
+                            <!--DL Menu Start-->
+                            <div id="kode-responsive-navigation" class="dl-menuwrapper">
+                                <button class="dl-trigger">Open Menu</button>
+                                <ul class="dl-menu">
+                                    <li><a href="#">Home</a></li>
+                                    <li><a href="{% url 'website:about' %}">About Us</a></li>
+                                    <li><a href="{% url 'website:course' %}">Course</a></li>
+                                    <li><a href="{% url 'website:student' %}">Student</a></li>
+                                    <li><a href="{% url 'website:franchise' %}">Franchise</a></li>
+                                    <li><a href="{% url 'website:gallery' %}">Gallery</a></li>
+                                    <li><a href="{% url 'website:blog' %}">Blog</a></li>
+                                    <li><a href="{% url 'website:contact' %}">Contact US</a></li>
+
+                                </ul>
+                            </div>
+                            <!--DL Menu END-->
+                        </div>
+                        <!--kode nav_2 end-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--kode navigation end-->
+    </header>
+    <!--HEADER END-->
+
+
+    {% block contentarea %}{% endblock %}
+    <!--FOOTER START-->
+    <footer>
+        <!--EDU2 FOOTER CONTANT WRAP START-->
+        <div class="container">
+            <div class="row">
+                <!--EDU2 FOOTER CONTANT DES START-->
+                <div class="col-md-3">
+                    <div class="widget widget-links">
+                        <h5>Information</h5>
+                        <ul>
+                            <li><a href="#">About us</a></li>
+                            <li><a href="#">Our Stories</a></li>
+                            <li><a href="#">My Account</a></li>
+                            <li><a href="#">Our History</a></li>
+                            <li><a href="#">Sprcialist Info</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!--EDU2 FOOTER CONTANT DES END-->
+
+                <!--EDU2 FOOTER CONTANT DES START-->
+                <div class="col-md-3">
+                    <div class="widget widget-links">
+                        <h5>Student Help</h5>
+                        <ul>
+                            <li><a href="#">My Info</a></li>
+                            <li><a href="#">My Questions</a></li>
+                            <li><a href="#">F.A.Q</a></li>
+                            <li><a href="#">Serch Courses</a></li>
+                            <li><a href="#">Latest Informations</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!--EDU2 FOOTER CONTANT DES END-->
+
+                <!--EDU2 FOOTER CONTANT DES START-->
+                <div class="col-md-3">
+                    <div class="widget wiget-instagram">
+                        <h5>Instagram</h5>
+                        <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Futecoffice%2F&tabs=timeline&width=265&height=350&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="265" height="350"
+                            style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                    </div>
+                </div>
+                <!--EDU2 FOOTER CONTANT DES END-->
+
+                <!--EDU2 FOOTER CONTANT DES START-->
+                <div class="col-md-3">
+                    <div class="widget widget-contact">
+                        <h5>Contact</h5>
+                        <ul>
+                            <li>Gyanlok Colony, Kankhal, Haridwar, Uttarakhand 249408.</li>
+                            <li>Phone : <a href="#"> +91 972-045-6052</a></li>
+                            <li>Fax : <a href="#">+91 972-045-6052</a></li>
+                            <li>Email : <a href="#"> info@utecindia.in</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!--EDU2 FOOTER CONTANT DES END-->
+            </div>
+        </div>
+    </footer>
+    <!--FOOTER END-->
+    <!--COPYRIGHTS START-->
+    <div class="edu2_copyright_wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="edu2_ft_logo_wrap">
+                        <a href="#"><img src="extra-images/ft_logo.png" alt="" /></a>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="copyright_des">
+                        <span>&copy; All Rights reserved. Powered By <a href="#" target="blank">DBUU</a></span>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <ul class="cards_wrap">
+                        <li>
+                            <a href="#"><img src="extra-images/visacard.png" alt="" /></a>
+                        </li>
+                        <li>
+                            <a href="#"><img src="extra-images/mastercard.png" alt="" /></a>
+                        </li>
+                        <li>
+                            <a href="#"><img src="extra-images/americancard.png" alt="" /></a>
+                        </li>
+                        <li>
+                            <a href="#"><img src="extra-images/card.png" alt="" /></a>
+                        </li>
+                        <li>
+                            <a href="#"><img src="extra-images/descoverycard.png" alt="" /></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--COPYRIGHTS START-->
+
+
+    <!--Bootstrap core JavaScript-->
+    <script src="{% static 'websites/js/jquery.js' %}"></script>
+    <script src="{% static 'websites/js/bootstrap.min.js' %}"></script>
+    <!--Bx-Slider JavaScript-->
+    <script src="{% static 'websites/js/jquery.bxslider.min.js' %}"></script>
+    <!--Owl Carousel JavaScript-->
+    <script src="{% static 'websites/js/owl.carousel.min.js' %}"></script>
+    <!--Pretty Photo JavaScript-->
+    <script src="{% static 'websites/js/jquery.prettyPhoto.js' %}"></script>
+    <!--Dl Menu Script-->
+    <script src="{% static 'websites/js/dl-menu/modernizr.custom.js' %}"></script>
+    <!--Dl Menu Script-->
+    <script src="{% static 'websites/js/dl-menu/jquery.dlmenu.js' %}"></script>
+    <!--Dl Menu Script-->
+    <script src="{% static 'websites/js/dl-menu/modernizr.custom.js' %}"></script>
+    <!--Dl Menu Script-->
+    <script src="{% static 'websites/js/dl-menu/jquery.dlmenu.js' %}"></script>
+    <!--Full Calender JavaScript-->
+    <script src="{% static 'websites/js/moment.min.js' %}"></script>
+    <script src="{% static 'websites/js/fullcalendar.min.js' %}"></script>
+    <script src="{% static 'websites/js/jquery.downCount.js' %}"></script>
+    <!--Image Filterable JavaScript-->
+    <script src="{% static 'websites/js/jquery-filterable.js' %}"></script>
+    <!--Accordian JavaScript-->
+    <script src="{% static 'websites/js/jquery.accordion.js' %}"></script>
+    <!--Number Count (Waypoints) JavaScript-->
+    <script src="{% static 'websites/js/waypoints-min.js' %}"></script>
+    <!--v ticker-->
+    <script src="{% static 'websites/js/jquery.vticker.min.js' %}"></script>
+    <!--select menu-->
+    <script src="{% static 'websites/js/jquery.selectric.min.js' %}"></script>
+    <!--Side Menu-->
+    <script src="{% static 'websites/js/jquery.sidr.min.js' %}"></script>
+    <!--Custom JavaScript-->
+    <script src="{% static 'websites/js/custom.js' %}"></script>
+
+    {% block scriptarea %}{% endblock %}
+</body>
+
+</html>

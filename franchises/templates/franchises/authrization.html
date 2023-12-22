@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+{% load static %} {% load certificate_filter %}
+
+<head>
+    <title>Authrization of {{data.name}} - {{data.code}}
+    </title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery.qrcode.min.js' %}"></script>
+</head>
+
+<style>
+    .container {
+        position: absolute;
+        top: 47%;
+        left: 10%;
+        right: 10%;
+        height: 70%;
+        /* border: 1px solid #000; */
+    }
+    
+    .container #profileImage {
+        position: absolute;
+        top: 28%;
+        left: 0%;
+    }
+    
+    .container .name {
+        position: absolute;
+        left: 20%;
+        top: 50%;
+        font-size: 22px;
+        font-weight: bold;
+        font-family: 'Roboto', sans-serif;
+        display: block;
+        text-align: center;
+    }
+    
+    .container .fr-name {
+        position: absolute;
+        left: 2%;
+        top: 50%;
+        font-size: 22px;
+        font-weight: bold;
+        color: #fff;
+        font-family: 'Roboto', sans-serif;
+        display: block;
+        text-align: center;
+    }
+    
+    .container .serial {
+        position: absolute;
+        right: 0%;
+        top: 38%;
+        font-size: 22px;
+        font-weight: bold;
+        font-family: 'Roboto', sans-serif;
+    }
+    
+    .container .text {
+        position: absolute;
+        left: 0%;
+        top: 45%;
+        font-size: 20px;
+        line-height: 27px;
+        text-align: justify;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    
+    .container .date {
+        position: absolute;
+        left: 0%;
+        top: 45%;
+        font-size: 20px;
+        line-height: 27px;
+        text-align: justify;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    
+    @media print {
+        .container {
+            top: 27%;
+            left: 13%;
+            right: 10%;
+            height: 56%;
+        }
+        .container .name {
+            top: 32%;
+            -webkit-print-color-adjust: exact;
+        }
+        .container .fr-name {
+            color: #fff;
+            top: 47%;
+            -webkit-print-color-adjust: exact;
+        }
+        .container .date {
+            top: 28%;
+        }
+        .container .text {
+            top: 55.50%;
+            left: 15%;
+            line-height: 25px;
+            color: #2669a8;
+        }
+        .container .date {
+            top: 112.50%;
+            left: -2%;
+            line-height: 25px;
+            color: #fff;
+            -webkit-print-color-adjust: exact;
+        }
+    }
+</style>
+
+<body style="margin: 0;">
+    <div style="margin: 0;">
+        <img src="{% static 'print/utec-authrization-a4.png' %}" style="width:100%; position: absolute;" />
+
+        <div class="container">
+            <div class="img-container">
+                <div id="qrcode">
+                </div>
+                <div id="profileImage">
+                    {% if data.center_head_image %}
+                    <img src="{{data.center_head_image.url}}" style="width: 80px; height: 80px;" /> {% endif %}
+                </div>
+            </div>
+            <div class="id-container">
+                <span class="name"><span>Mr. {{emp.name}} [ {{data.code}} ]</span></span>
+            </div>
+            <div class="id-container">
+                <span class="fr-name"><span>{{data.name}} </span></span>
+            </div>
+            <div class="text-container">
+                <p class="text">{{data.district|title}}, {{data.city|title}}, {{data.state|title}}-{{data.pin_code}}</p>
+            </div>
+            <div class="sign-container">
+                <p class="date">{{date|date:"d-M-Y"}}</p>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+</script>
+
+</html>

@@ -1,0 +1,87 @@
+{% extends 'StudentBase.html' %}{% load static %} {% load widget_tweaks %} {% block styleArea %}
+<style></style>
+<link href="{% static 'css/contact.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'plugins/ladda/ladda-themeless.min.css' %}" rel="stylesheet" /> {% endblock %} {% block contentArea %}
+<div></div>
+
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+        <!-- BEGIN PAGE HEADER-->
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="{% url 'students:dashboard' %}">Student</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <span>Dashboard</span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        <!-- BEGIN PAGE TITLE-->
+        <h1 class="page-title">Student Dashboard</h1>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 blue" href="{% url 'students:student_profile_st'  %}">
+                    <div class="visual">
+                        <i class="fa fa-comments"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            <span class="counterup" id="objFranchise">
+                                </span>
+                        </div>
+                        <div class="desc"> Student Profile</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 red" href="{% url 'fees:st_fee_list' %}">
+                    <div class="visual">
+                        <i class="fa fa-bar-chart-o"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            <span class="counterup" id="objStudents"></span>
+                        </div>
+                        <div class="desc">Fee List</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 green" href="{% url 'fees:st_fee_installment_list' %}">
+                    <div class="visual">
+                        <i class="fa fa-shopping-cart"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            <span class="counterup" id="objCourse"></span>
+                        </div>
+                        <div class="desc">Fee Installment List</div>
+                    </div>
+                </a>
+            </div>
+            <!-- <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 purple" href="#">
+                    <div class="visual">
+                        <i class="fa fa-globe"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            ₹&nbsp;<span class="counterup" id="objProfit">300</span>
+                        </div>
+                        <div class="desc">Profit</div>
+                    </div>
+                </a>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+{% endblock %} {% block scriptArea %}
+<script></script>
+{% endblock %}

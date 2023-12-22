@@ -1,0 +1,103 @@
+{% extends 'StudentBase.html' %}{% load static %} {% load widget_tweaks %} {% block styleArea %}
+<style></style>
+<link href="{% static 'plugins/ladda/ladda-themeless.min.css' %}" rel="stylesheet" /> {% endblock %} {% block contentArea %}
+<div></div>
+
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+        <!-- BEGIN PAGE HEADER-->
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="#">Home</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <a href="#">Fee</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <span>Fee List</span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        <!-- BEGIN PAGE TITLE-->
+        <h1 class="page-title">Fee List</h1>
+        <!-- END PAGE TITLE-->
+        <div class="row">
+            <div id="objReport"></div>
+            <div class="col-md-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-body form">
+                        <div class="row">
+                            <div class="col-md-12 form-group table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>S. No</th>
+                                            <th>Name</th>
+                                            <th>Course</th>
+                                            <th>installment</th>
+                                            <th>Date</th>
+                                            <th>Fee</th>
+                                            <th>Fine</th>
+                                            <th>Total Amount</th>
+                                            <th>Paid Amount</th>
+                                            <th>Fee Status</th>
+                                            <th>Payment Method</th>
+                                            <th>Receipt</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for dt in data %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>
+                                                {{dt.student}}
+                                                <br>{{dt.student.code}}
+
+                                            </td>
+                                            <td>{{dt.course}} <br> <b>{{dt.course.code}}</b></td>
+                                            <td>{{dt.get_installment}}</td>
+                                            <td>{{dt.date}}</td>
+                                            <td>{{dt.fee}}</td>
+                                            <td>{{dt.fine}}</td>
+                                            <td>{{dt.total_amount}}</td>
+                                            <td>{{dt.paid_amount}} {% if dt.is_pending_amount %}
+                                                <label for="" class="label label-danger label-sm pull-right">{{dt.pending_amount}}
+                                                    {% endif %}</label></td>
+                                            <td>{{dt.status}}</td>
+                                            <td>{{dt.payment_method}}</td>
+                                            <td>
+                                                <a href="{% url 'fees:fee_receipt' dt.id %}" target="_blank">Print</a>
+                                            </td>
+                                        </tr> {% empty %}
+                                        <tr>
+                                            <td colspan="11">No Data Found!</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %} {% block scriptArea %}
+<script></script>
+<script>
+    $(document).ready(function() {
+        $('.req').append('<span style="color:red;">&nbsp;&nbsp;*</span>');
+        $('.nreq').append('<span style="color:red;">&nbsp;&nbsp;</span>');
+    });
+</script>
+
+<script src="{% static 'plugins/ladda/spin.min.js' %}"></script>
+<script src="{% static 'plugins/ladda/ladda.min.js' %}"></script>{% endblock %}

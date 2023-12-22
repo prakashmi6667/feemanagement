@@ -1,0 +1,154 @@
+{% extends 'WebsiteBase.html' %}{% load static %} {% load widget_tweaks %} {% block styleArea %}
+<style></style>
+<link href="{% static 'css/contact.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'plugins/ladda/ladda-themeless.min.css' %}" rel="stylesheet" /> {% endblock %} {% block contentArea %}
+<div></div>
+
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content" style="margin-left: 0;">
+        <!-- BEGIN PAGE HEADER-->
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="#">Home</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <a href="#">Franchise</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <span>Registration</span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        <!-- BEGIN PAGE TITLE-->
+        <h1 class="page-title">Registration Successfull</h1>
+        <div class="c-content-feedback-1 c-option-1">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="c-container bg-green">
+                        <div class="c-content-title-1 c-inverse">
+                            <h3 class="uppercase">Congratulation Your registration has bee done!</h3>
+                            <div class="c-line-left"></div>
+                            <p class="c-font-lowercase">Try visiting our FAQ page to learn more about our greatest ever expanding theme, Metronic.</p>
+                            <a href="#" class="btn grey-cararra font-dark">Got to Home</a>
+                        </div>
+                    </div>
+                    <div class="c-container bg-grey-steel">
+                        <div class="c-content-title-1">
+                            <h3 class="uppercase">Why We are the best?</h3>
+                            <div class="c-line-left bg-dark"></div>
+                            <p>Ask your questions away and let our dedicated customer service help you look through our FAQs to get your questions answered!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="c-contact">
+                        <div class="c-content-title-1">
+                            <h3 class="uppercase">Keep in touch</h3>
+                            <div class="c-line-left bg-dark"></div>
+                            <p class="c-font-lowercase">Our helpline is always open to receive any inquiry or feedback. Please feel free to drop us an email from the form below and we will get back to you as soon as we can.</p>
+                        </div>
+                        <form action="{% url 'franchises:successful' %}" method="POST" novalidate>
+                            {% csrf_token %} {% for field in form.visible_fields %} {% if form.is_bound %} {% if field.errors %}
+                            <div class="form-group has-error">
+                                {% render_field field class="form-control" placeholder=field.label %} {% for error in field.errors%}
+                                <span class="help-block">{{ error }}</span> {% endfor %} {% if field.help_text %}<small class="form-text text-muted">{{ field.help_text }}</small>{%endif%}
+                            </div>{% else %}
+                            <div class="form-group {% if field.field.required %} has-success {% endif %}">
+                                {% render_field field class="form-control" placeholder=field.label %} {% if field.help_text %}<small class="form-text text-muted">{{ field.help_text }}</small>{%endif%}
+                                <span class="help-block"> {% if field.field.required %}Looks Good!
+                                    {% else %} &nbsp;&nbsp;&nbsp;
+                                    {% endif %} </span>
+                            </div>
+                            {% endif %} {% else %}
+                            <div class="form-group">
+                                {% render_field field class="form-control" placeholder=field.label %} {% if field.help_text %}
+                                <small class="form-text text-muted">{{ field.help_text }}</small>{%endif%}
+                            </div>
+                            {% endif %} {% endfor %}
+                            <button type="submit" class="btn grey">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="c-content-contact-1 c-opt-1">
+            <div class="row" data-auto-height=".c-height">
+                <div class="col-lg-8 col-md-6 c-desktop"></div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="c-body">
+                        <div class="c-section">
+                            <h3>UTEC Skill Development</h3>
+                        </div>
+                        <div class="c-section">
+                            <div class="c-content-label uppercase bg-blue">Address</div>
+                            <p>Near Rajput Dharamshala, Gyan Lok Colony,<br> Kankhal, Haridwar, Uttarakhand 269408</p>
+                        </div>
+                        <div class="c-section">
+                            <div class="c-content-label uppercase bg-blue">Contacts</div>
+                            <p>
+                                <strong>Mobile: </strong> +919720456052
+                                <br />
+                                <strong>Email: </strong> info@utecindia.in</p>
+                        </div>
+                        <div class="c-section">
+                            <div class="c-content-label uppercase bg-blue">Social</div>
+                            <br />
+                            <ul class="c-content-iconlist-1 ">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-twitter"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-facebook"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-youtube-play"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-linkedin"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="gmapbg" class="c-content-contact-1-gmap" style="height: 615px;">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3457.658626192207!2d78.1414272154703!3d29.931728530842676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390946453fffffff%3A0xfb90a55415e072a1!2sUTEC%20Skill%20Development!5e0!3m2!1sen!2sin!4v1595663062386!5m2!1sen!2sin"
+                    style="width: 100%; height: 100%;" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %} {% block scriptArea %}
+<script></script>
+<script>
+    $(document).ready(function() {
+        $('.req').append('<span style="color:red;">&nbsp;&nbsp;*</span>');
+
+        '{% if error %}'
+        alert('{{error}}')
+        '{% endif %}'
+
+        '{% if success %}'
+        alert('{{success}}')
+        '{% endif %}'
+    });
+</script>
+
+<script src="{% static 'plugins/ladda/spin.min.js' %}"></script>
+<script src="{% static 'plugins/ladda/ladda.min.js' %}"></script>{% endblock %}

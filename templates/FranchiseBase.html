@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="utf-8" />
+    <title>Institute Management Application</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="Institute Management Application, IMS, Manage Institute Online" name="description" />
+    <meta content="Parvat And Sons" name="author" />
+    <meta name="theme-color" content="Blue" />
+    <!-- <link rel="manifest" href="/ims/manifest.json" /> -->
+    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" />
+    <link rel="apple-touch-icon" href="{% static 'img/favicon.png' %}" />
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'img/152x152.png' %}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/180x180.png' %}" />
+    <link rel="apple-touch-icon" sizes="167x167" href="{% static 'img/167x167.png' %}" />
+    <link rel="apple-touch-startup-image" href="{% static 'img/favicon.png' %}" />
+    <meta name="apple-mobile-web-app-title" content="Institute Management Application" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="Blue" />
+
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&amp;subset=all" rel="stylesheet" type="text/css" />
+
+    <link href="{% static 'plugins/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'plugins/simple-line-icons/simple-line-icons.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'plugins/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <link href="{% static 'css/components-rounded.min.css' %}" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="{% static 'css/plugins.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <link href="{% static 'css/layout.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/darkblue.min.css' %}" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="{% static 'css/custom.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'plugins/bootstrap-toastr/toastr.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- END THEME LAYOUT STYLES -->
+
+    {% block styleArea %}{% endblock %}
+
+</head>
+
+<body class="page-sidebar-closed-hide-logo page-content-white page-header-fixed page-footer-fixed">
+
+    <div class="page-wrapper">
+        <div class="page-header navbar navbar-fixed-top">
+            <!-- BEGIN HEADER INNER -->
+            <div class="page-header-inner ">
+                <!-- BEGIN LOGO -->
+                <div class="page-logo">
+                    <a href="Dashboard.aspx">
+                        <img src="{% static 'websites/images/icon/logo-wide.png' %}" alt="logo" class="logo-default" style="width: 117px;" />
+                    </a>
+                    <div class="menu-toggler sidebar-toggler">
+                        <span></span>
+                    </div>
+                </div>
+                <!-- END LOGO -->
+                <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+                <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span></span>
+                </a>
+                <!-- END RESPONSIVE MENU TOGGLER -->
+                <!-- BEGIN TOP NAVIGATION MENU -->
+                <div class="top-menu">
+                    <ul class="nav navbar-nav pull-right">
+                        <!-- BEGIN NOTIFICATION DROPDOWN -->
+                        <!-- DOC: Apply "dropdown-dark" class after "dropdown-extended" to change the dropdown styte -->
+                        <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <i class="icon-bell"></i>
+                                <span class="badge badge-default " id="objNotiCount">0</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="external">
+                                    <h3>
+                                        <span class="bold"><span id="objNotiCount1">0</span></span> Notifications
+                                    </h3>
+                                    <a href="javascript:fn_NotiSeen();">Mark as Seen</a>
+                                </li>
+                                <li>
+                                    <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283" id="objNotiView">
+                                        <li>
+                                            <a href="javascript:;">
+                                                <span class="time">just now</span>
+                                                <span class="details">
+                                                    <span class="label label-sm label-icon label-success">
+                                                        <i class="fa fa-plus"></i>
+                                                    </span>New user registered.
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END NOTIFICATION DROPDOWN -->
+
+                        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                        <li class="dropdown dropdown-user">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <span class="username username-hide-on-mobile" id="SSN_UserName">{{session.name}}
+                                </span>
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-default">
+                                <li>
+                                    <a href="#">
+                                        <i class="icon-user"></i>Change Password
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="icon-calendar"></i>View Account
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="{% url 'franchises:logout' %}">
+                                        <i class="icon-key"></i>Log Out
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END USER LOGIN DROPDOWN -->
+                    </ul>
+                </div>
+                <!-- END TOP NAVIGATION MENU -->
+            </div>
+            <!-- END HEADER INNER -->
+        </div>
+
+        <div class="clearfix"></div>
+
+        <!-- BEGIN CONTAINER -->
+        <div class="page-container">
+            <!-- BEGIN SIDEBAR -->
+            <div class="page-sidebar-wrapper">
+                <!-- BEGIN SIDEBAR -->
+                <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+                <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+                <div class="page-sidebar navbar-collapse collapse">
+                    <!-- BEGIN SIDEBAR MENU -->
+                    <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+                        <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
+                        <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                        <li class="sidebar-toggler-wrapper hide">
+                            <div class="sidebar-toggler">
+                                <span></span>
+                            </div>
+                        </li>
+                        <!-- END SIDEBAR TOGGLER BUTTON -->
+                        <!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
+                        <li class="nav-item start">
+                            <a href="{% url 'franchises:dashboard' %}" class="nav-link">
+                                <i class="icon-home"></i>
+                                <span class="title">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item start">
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-folder"></i>
+                                <span class="title">Students</span>
+                                <span class="selected"></span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item start">
+                                    <a href="{% url 'students:list' %}" class="nav-link ">
+                                        <i class="icon-target"></i>
+                                        <span class="title">Student details</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item start">
+                                    <a href="{% url 'students:timetable_list' %}" class="nav-link ">
+                                        <i class="icon-target"></i>
+                                        <span class="title">Timetable List</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item start">
+                                    <a href="{% url 'students:attendance_list' %}" class="nav-link ">
+                                        <i class="icon-target"></i>
+                                        <span class="title">Attendance List</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item start">
+                                    <a href="{% url 'students:Leave_request_list' %}" class="nav-link ">
+                                        <i class="icon-target"></i>
+                                        <span class="title">Leave Request List</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item start">
+                                    <a href="{% url 'students:rank_list' %}" class="nav-link ">
+                                        <i class="icon-target"></i>
+                                        <span class="title">Student Rank List</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item start">
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-folder"></i>
+                                <span class="title">Course</span>
+                                <span class="selected"></span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item start">
+                                    <a href="{% url 'courses:Assign_course_list' %}" class="nav-link ">
+                                        <i class="icon-target"></i>
+                                        <span class="title">Assign Course</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item start">
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-folder"></i>
+                                <span class="title">Employee</span>
+                                <span class="selected"></span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item start">
+                                    <a href="{% url 'employee:list' %}" class="nav-link ">
+                                        <i class="icon-target"></i>
+                                        <span class="title">List</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item start">
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-folder"></i>
+                                <span class="title">Fees</span>
+                                <span class="selected"></span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item start">
+                                    <a href="{% url 'fees:list' %}" class="nav-link ">
+                                        <i class="icon-target"></i>
+                                        <span class="title">List</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item start">
+                                    <a href="{% url 'fees:fee_installment_list' %}" class="nav-link ">
+                                        <i class="icon-target"></i>
+                                        <span class="title">Installment List</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item start">
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-folder"></i>
+                                <span class="title">Examination</span>
+                                <span class="selected"></span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item start">
+                                    <a href="#" class="nav-link ">
+                                        <i class="icon-target"></i>
+                                        <span class="title">Certificate List</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item start">
+                                    <a href="#" class="nav-link ">
+                                        <i class="icon-target"></i>
+                                        <span class="title">Admit Card List</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item start">
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-folder"></i>
+                                <span class="title">Account</span>
+                                <span class="selected"></span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item start">
+                                    <a href="{% url 'account:list' %}" class="nav-link ">
+                                        <i class="icon-target"></i>
+                                        <span class="title">List</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item start">
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-folder"></i>
+                                <span class="title">Mail & Message</span>
+                                <span class="selected"></span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item start">
+                                    <a href="{% url 'franchises:message_board_list' %}" class="nav-link ">
+                                        <i class="icon-target"></i>
+                                        <span class="title">Message List</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item start">
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-folder"></i>
+                                <span class="title">Reports</span>
+                                <span class="selected"></span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item start">
+                                    <a href="{% url 'students:attendance_list' %}" class="nav-link ">
+                                        <i class="icon-target"></i>
+                                        <span class="title">Attendance Report</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item start">
+                                    <a href="{% url 'courses:course_report' %}" class="nav-link ">
+                                        <i class="icon-target"></i>
+                                        <span class="title">Course Report</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item start">
+                                    <a href="{% url 'students:Leave_request_list' %}" class="nav-link ">
+                                        <i class="icon-target"></i>
+                                        <span class="title">Franchise Rank Report</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item start">
+                                    <a href="{% url 'fees:list' %}" class="nav-link ">
+                                        <i class="icon-target"></i>
+                                        <span class="title">Fee Report</span>
+                                    </a>
+                                </li>
+
+
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- END SIDEBAR MENU -->
+                    <!-- END SIDEBAR MENU -->
+                </div>
+                <!-- END SIDEBAR -->
+            </div>
+            <!-- END SIDEBAR -->
+            <!-- BEGIN CONTENT -->
+            {% block contentArea %}{% endblock %}
+            <!-- END CONTENT -->
+        </div>
+        <!-- END CONTAINER -->
+        <!-- BEGIN FOOTER -->
+        <div class="page-footer">
+            <div class="page-footer-inner">
+                <script>
+                    document.write(new Date().getFullYear())
+                </script>
+                &copy; IMS Designed And Developed By
+                <a target="_blank" href="https://parvatiandsons.com/">Parvati And Sons </a>
+            </div>
+            <div class="scroll-to-top">
+                <i class="icon-arrow-up"></i>
+            </div>
+        </div>
+        <!-- END FOOTER -->
+    </div>
+    <!-- <script src="/ims/lib/sw-controller.js"></script> -->
+    <!-- BEGIN GLOBAL PLUGINS -->
+    <script src="{% static 'js/jquery.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'plugins/jquery-slimscroll/jquery.slimscroll.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/app.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/layout.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'plugins/bootstrap-toastr/toastr.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/quick-sidebar.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/quick-nav.min.js' %}" type="text/javascript"></script>
+    {% block scriptArea %}{% endblock %}
+</body>
+
+</html>

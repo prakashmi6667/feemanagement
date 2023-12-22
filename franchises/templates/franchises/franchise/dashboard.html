@@ -1,0 +1,420 @@
+{% extends 'FranchiseBase.html' %}{% load static %} {% load widget_tweaks %} {% block styleArea %}
+<style></style>
+<link href="{% static 'css/contact.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'plugins/ladda/ladda-themeless.min.css' %}" rel="stylesheet" /> {% endblock %} {% block contentArea %}
+<div></div>
+
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+
+
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+
+                    <a href="{% url 'franchises:dashboard' %}">Home</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <span>Dashboard</span>
+                </li>
+            </ul>
+            <div class="page-toolbar">
+                <div id="dashboard-report-range" class="pull-right tooltips btn btn-sm" data-container="body" data-placement="bottom" data-original-title="Change dashboard date range">
+                    <i class="icon-calendar"></i>&nbsp;
+                    <span class="bold uppercase hidden-xs"></span>&nbsp;
+                    <i class="fa fa-angle-down"></i>
+                </div>
+            </div>
+        </div>
+
+
+        <h1 class="page-title">Admin Dashboard
+            <small>statistics, charts, recent events and reports</small>
+        </h1>
+
+
+
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
+                    <div class="visual">
+                        <i class="fa fa-comments"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            <span class="counterup" id="objFranchise">{{student}}</span>
+                        </div>
+                        <div class="desc"> Total Students</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 red" href="#">
+                    <div class="visual">
+                        <i class="fa fa-bar-chart-o"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            <span class="counterup" id="objStudents">{{studentActive}}</span>
+                        </div>
+                        <div class="desc">Active</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 green" href="#">
+                    <div class="visual">
+                        <i class="fa fa-shopping-cart"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            <span class="counterup" id="objCourse">{{stApplied}}</span>
+                        </div>
+                        <div class="desc">Applied</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 purple" href="#">
+                    <div class="visual">
+                        <i class="fa fa-globe"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            ₹&nbsp;<span class="counterup" id="objProfit">0</span>
+                        </div>
+                        <div class="desc">Certificates</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
+                    <div class="visual">
+                        <i class="fa fa-comments"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            <span class="counterup" id="objFranchise">{{stApprove}}</span>
+                        </div>
+                        <div class="desc"> Approved</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 red" href="#">
+                    <div class="visual">
+                        <i class="fa fa-bar-chart-o"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            <span class="counterup" id="objStudents">{{course}}</span>
+                        </div>
+                        <div class="desc">Total Course</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 green" href="#">
+                    <div class="visual">
+                        <i class="fa fa-shopping-cart"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            <span class="counterup" id="objCourse">{{point.total_points}}</span>
+                        </div>
+                        <div class="desc">Total Rank</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 purple" href="#">
+                    <div class="visual">
+                        <i class="fa fa-globe"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            ₹&nbsp;<span class="counterup" id="objProfit">300</span>
+                        </div>
+                        <div class="desc">Profit</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="portlet light bordered">
+                    <div class="portlet-body">
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <div class="note note-info">
+                                    <h4 class="block"><b>Top Five Leave Request</b></h4>
+                                    <p>Here is your top courses behalf of Leave Request.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-12 form-group table-responsive">
+                                <table class="table table-responsive table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>S. No.</th>
+                                            <th>Name</th>
+                                            <th>Date</th>
+                                            <th>Remark</th>
+                                            <th>Status </th>
+                                        </tr>
+                                    </thead>
+                                    {% if leaveRequest %}
+                                    <tbody id="objCourseDetails">
+                                        {% for data in leaveRequest %}
+                                        <tr>
+                                            <td>{{ forloop.counter}}</td>
+                                            <td>{{data.student.name}}</td>
+                                            <td>{{data.date}}</td>
+                                            <td>{{data.remarks}}</td>
+                                            <td>{{data.status}}</td>
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                    {% endif %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+
+                <div class="portlet light bordered">
+                    <div class="portlet-body">
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <div class="note note-info">
+                                    <h4 class="block"><b>Top Five Certificates</b></h4>
+                                    <p>Here is your top courses behalf of student registration</p>
+                                </div>
+                            </div>
+                            <div class="col-md-12 form-group table-responsive">
+                                <table class="table table-responsive table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>S. No.</th>
+                                            <th>Name</th>
+                                            <th>Course</th>
+                                            <th>Duration</th>
+                                            <th>Issue Date</th>
+                                        </tr>
+                                    </thead>
+                                    {% if certificate %}
+                                    <tbody id="objCourseDetails">
+                                        {% for data in certificate %}
+                                        <tr>
+                                            <td>{{ forloop.counter}}</td>
+                                            <td>{{data.students.name}}</td>
+                                            <td>{{data.students.course.name}}</td>
+                                            <td>{{data.students.course.duration}}</td>
+                                            <td>{{data.issue_date}}</td>
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                    {% endif %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="portlet light bordered">
+                    <div class="portlet-body">
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <div class="note note-info">
+                                    <h4 class="block"><b>Top Five Fee</b></h4>
+                                    <p>Here is your top courses behalf of student registration</p>
+                                </div>
+                            </div>
+                            <div class="col-md-12 form-group table-responsive">
+                                <table class="table table-responsive table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>S. No.</th>
+                                            <th>Name</th>
+                                            <th>Course</th>
+                                            <th>Fee Amount</th>
+                                            <th>Date</th>
+
+                                        </tr>
+                                    </thead>
+                                    {% if fee %}
+                                    <tbody id="objCourseDetails">
+                                        {% for data in fee %}
+                                        <tr>
+                                            <td>{{ forloop.counter}}</td>
+                                            <td>{{data.student.name}}</td>
+                                            <td>{{data.course}}</td>
+                                            <td>{{data.fee}}</td>
+                                            <td>{{data.date}}</td>
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                    {% endif %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+
+                <div class="portlet light bordered">
+                    <div class="portlet-body">
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <div class="note note-info">
+                                    <h4 class="block"><b>Top Five pyment</b></h4>
+                                    <p>Here is your top courses behalf of student registration</p>
+                                </div>
+                            </div>
+                            <div class="col-md-12 form-group table-responsive">
+                                <table class="table table-responsive table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>S. No.</th>
+                                            <th>Name</th>
+                                            <th>Course</th>
+                                            <th>Duration</th>
+                                            <th>Issue Date</th>
+                                        </tr>
+                                    </thead>
+                                    {% if certificate %}
+                                    <tbody id="objCourseDetails">
+                                        {% for data in certificate %}
+                                        <tr>
+                                            <td>{{ forloop.counter}}</td>
+                                            <td>{{data.students.name}}</td>
+                                            <td>{{data.students.course.name}}</td>
+                                            <td>{{data.students.course.duration}}</td>
+                                            <td>{{data.issue_date}}</td>
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                    {% endif %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+
+                <div class="portlet light bordered">
+                    <div class="portlet-body">
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <div class="note note-info">
+                                    <h4 class="block"><b>Top Five Message Request</b></h4>
+                                    <p>Here is your top courses behalf of Message Request</p>
+                                </div>
+                            </div>
+                            <div class="col-md-12 form-group table-responsive">
+                                <table class="table table-responsive table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>S. No.</th>
+                                            <th>Message</th>
+                                            <th>Revert Message</th>
+
+                                        </tr>
+                                    </thead>
+                                    {% if messagereq %}
+                                    <tbody id="objCourseDetails">
+                                        {% for data in messagereq %}
+                                        <tr>
+                                            <td>{{ forloop.counter}}</td>
+                                            <td>{{data.message}}</td>
+                                            <td>{{data.revert_message}}</td>
+
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                    {% endif %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+
+                <div class="portlet light bordered">
+                    <div class="portlet-body">
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <div class="note note-info">
+                                    <h4 class="block"><b>Top Five Pending Fee</b></h4>
+                                    <p>Here is your top courses behalf of Pending Fee</p>
+                                </div>
+                            </div>
+                            <div class="col-md-12 form-group table-responsive">
+                                <table class="table table-responsive table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>S. No.</th>
+                                            <th>Name</th>
+                                            <th>Course</th>
+                                            <th>Fee Amount</th>
+                                            <th>Installment</th>
+
+                                        </tr>
+                                    </thead>
+                                    {% if pendingfee %}
+                                    <tbody id="objCourseDetails">
+                                        {% for data in pendingfee %}
+                                        <tr>
+                                            <td>{{ forloop.counter}}</td>
+                                            <td>{{data.student.name}}</td>
+                                            <td>{{data.student.course}}</td>
+                                            <td>{{data.total_amount}}</td>
+                                            <td>{{data.total_installment}}</td>
+
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                    {% endif %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %} {% block scriptArea %}
+<script></script>
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends 'StudentBase.html' %}{% load static %} {% load widget_tweaks %} {% block styleArea %}
+<style></style>
+<link href="{% static 'plugins/ladda/ladda-themeless.min.css' %}" rel="stylesheet" /> {% endblock %} {% block contentArea %}
+<div></div>
+
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+        <!-- BEGIN PAGE HEADER-->
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="#">Home</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <a href="#">Fee</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <span>Fee Installment List</span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        <!-- BEGIN PAGE TITLE-->
+        <h1 class="page-title">Fee Installment List</h1>
+        <!-- END PAGE TITLE-->
+        <div class="row">
+            <div id="objReport"></div>
+            <div class="col-md-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="actions">
+                            {% for dt in data %} {% if dt.is_last_installment_len %}
+                            <div class="btn-group btn-group-devided">
+                                <a class="btn red btn-outline" href="{% url 'fees:st_fee_add' %}">Add New</a>
+                            </div>
+                            {% else %}
+
+                            <div class="btn-group btn-group-devided">
+                                <a class="btn red btn-outline" href="#">Now Your Dues Is Clear</a>
+                            </div> {% endif %} {% endfor %}
+
+
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+
+                        <div class="row">
+                            <div class="col-md-12 form-group table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>S. No</th>
+                                            <th>Name</th>
+                                            <th>Course</th>
+                                            <th>Fee</th>
+                                            <th>Discount</th>
+                                            <th>Total Amount</th>
+                                            <th>Monthly Amount</th>
+                                            <th>Installment</th>
+                                            <th>Fee Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for dt in data %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>
+                                                {{dt.student}} <br>{{dt.student.code}}
+                                            </td>
+                                            <td>{{dt.course}} <br> <b>{{dt.course.code}}</b></td>
+                                            <td>{{dt.fee_amount}}</td>
+                                            <td>{{dt.discount}}</td>
+                                            <td>{{dt.total_amount}}</td>
+                                            <td>{{dt.monthly_amount}}</td>
+                                            <td>{{dt.get_installment}}</td>
+                                            <td>{{dt.status}}</td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="9">No Data Found!</td>
+                                        </tr> {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %} {% block scriptArea %}
+<script src="{% static 'lib/Fee-Installment.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        $('#id_student').on('change', function() {
+            fn_GetCourse()
+        })
+
+
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('.req').append('<span style="color:red;">&nbsp;&nbsp;*</span>');
+        $('.nreq').append('<span style="color:red;">&nbsp;&nbsp;</span>');
+    });
+</script>
+
+<script src="{% static 'plugins/ladda/spin.min.js' %}"></script>
+<script src="{% static 'plugins/ladda/ladda.min.js' %}"></script>{% endblock %}

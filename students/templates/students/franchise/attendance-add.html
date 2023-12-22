@@ -1,0 +1,224 @@
+{% extends 'FranchiseBase.html' %}{% load static %} {% load widget_tweaks %} {% block styleArea %}
+<style></style>
+<link href="{% static 'plugins/ladda/ladda-themeless.min.css' %}" rel="stylesheet" />
+<link href="{% static 'plugins/bootstrap-switch/css/bootstrap-switch.min.css' %}" rel="stylesheet" type="text/css" /> {% endblock %} {% block contentArea %}
+<div></div>
+
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+        <!-- BEGIN PAGE HEADER-->
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="#">Home</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <a href="#">Student</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <span>Attendance</span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        <!-- BEGIN PAGE TITLE-->
+        <h1 class="page-title">Attendance Details</h1>
+        <!-- END PAGE TITLE-->
+        <div class="row">
+            <div id="objReport"></div>
+            <div class="col-md-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-body form">
+                        <div class="">
+                            <div class="form-wizard">
+                                <form action="" method="POST" class="form-body" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="mt-element-card mt-element-overlay" id="objDetails">
+                                        {% if timetable %}
+                                        <div class="row" id="objTimetable">{% for tt in timetable %}
+                                            <div class="col-md-2 form-group">
+                                                <a href="{% url 'students:attendanceByTimetable_add' tt.id %}" class="btn btn-default btn-block">{{tt.start_time}} -
+                                                    {{tt.end_time}}</a>
+                                            </div>{% endfor %}
+                                        </div>
+                                        {% endif %} {% if student %}
+                                        <hr />
+                                        <div class="row">
+                                            {% if student %}
+                                            <div class="col-md-6 form-group">
+                                                <label style="display: block;">&nbsp;</label>
+                                                <button type="button" class="btn btn-default" onclick="fn_ResetAll()">Reset All</button>
+                                                <button type="button" class="btn btn-primary" onclick="fn_PresentAll()">Present All</button>
+                                                <button type="button" class="btn btn-danger" onclick="fn_AbsentAll()">Absent All</button>
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <label style="display: block;">&nbsp;</label>
+                                                <input type="date" name="date" required="required" class="form-control">
+                                            </div>
+                                            <hr />{% endif %}
+                                            <div id="objStudent">
+                                                {% for st in student %}
+                                                <div class="col-md-3 tt_{{st.pk}}">
+                                                    <div class="mt-card-item">
+                                                        <div class="mt-card-content">
+                                                            <h3 class="mt-card-name">{{st.name}}</h3>
+                                                            <p class="mt-card-desc font-grey-mint">{{st.code}}</p>
+                                                            <br /><span id="objStudent_{{st.id}}"></span>
+                                                            <div class="form-group switch-collection">
+                                                                <input type="checkbox" data-id="{{st.id}}" onchange="fn_checkChange(this)" name="is_present" class="make-switch" data-size="small" data-on-text="&nbsp;P&nbsp;" data-off-text="&nbsp;P&nbsp;" data-on-color="success" data-off-color="default" value="1">
+                                                                <input type="checkbox" data-id="{{st.id}}" onchange="fn_checkChange(this)" name="is_present" class="make-switch" data-size="small" data-on-text="&nbsp;A&nbsp;" data-off-text="&nbsp;A&nbsp;" data-on-color="danger" data-off-color="default" value="2">
+                                                                <input type="checkbox" data-id="{{st.id}}" onchange="fn_checkChange(this)" name="is_present" class="make-switch" data-size="small" data-on-text="&nbsp;L&nbsp;" data-off-text="&nbsp;L&nbsp;" data-on-color="warning" data-off-color="default" value="3">
+                                                            </div>
+                                                            <div id="objStudent_rmrk_{{st.id}}" class="rmark">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    {% if student %}
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <button type="submit" id="btnSave" class="btn btn-primary">
+                                                Save
+                                            </button>
+                                            <a href="{% url 'students:registration' %}" class="btn btn-danger">Clear</a>
+                                        </div>
+                                    </div>{% endif %}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .rmark {
+        padding: 10px;
+        min-height: 60px !important;
+    }
+</style>
+{% endblock %} {% block scriptArea %}
+<script></script>
+<script>
+    $(document).ready(function() {
+        $('.req').append('<span style="color:red;">&nbsp;&nbsp;*</span>');
+        $('.nreq').append('<span style="color:red;">&nbsp;&nbsp;</span>');
+
+        $.each($('#objTimetable a'), function() {
+            if ($(this).prop('href') == window.location.href) {
+                $(this).addClass('btn-primary')
+            }
+        })
+    });
+
+    function fn_checkChange(e) {
+        try {
+            let status = $(e).prop('checked')
+            let value = $(e).val()
+            let __id = $(e).data('id')
+
+            if (status == true) {
+                $('#objStudent_' + __id).empty().append('<input type="hidden" name="student" value="' + __id + '">')
+                $('#objStudent_rmrk_' + __id).empty().append('<input class="form-control remarks" type="text" name="remarks" placeholder="Leave Remarks" />')
+            } else {
+                $('#objStudent_rmrk_' + __id).empty()
+                $('#objStudent_' + __id).empty()
+            }
+
+            // console.log(value, status)
+            // if (status == true && value == 3) {
+
+            // } else {
+
+            // }
+
+            $(e).parent().parent().parent().find('input[type="checkbox"]').prop('checked', false)
+            $(e).prop('checked', status)
+
+            $(e).parent().parent().parent().find('input[type="checkbox"]').bootstrapSwitch('destroy');
+            $(e).parent().parent().parent().find('input[type="checkbox"]').bootstrapSwitch();
+
+            if (value == 3) {
+                $(e).parent().parent().parent().parent().find('input[type="text"]').attr('required', 'required')
+            } else {
+                $(e).parent().parent().parent().parent().find('input[type="text"]').removeAttr('required')
+            }
+        } catch (err) {
+
+            console.log(err)
+        }
+    }
+
+    function fn_PresentAll() {
+        $('#objStudent').find('input[type="checkbox"]').prop('checked', false)
+        $('#objStudent').find('input[type="checkbox"][value="1"]').prop('checked', true)
+        $.each($('#objStudent').find('input[type="checkbox"][value="1"]'), function() {
+            e = this
+            let status = $(e).prop('checked')
+            let value = $(e).val()
+            let __id = $(e).data('id')
+
+            if (status == true) {
+                $('#objStudent_' + __id).empty().append('<input type="hidden" name="student" value="' + __id + '">')
+                $('#objStudent_rmrk_' + __id).empty().append('<input class="form-control remarks" type="text" name="remarks" placeholder="Leave Remarks" />')
+            } else {
+                $('#objStudent_rmrk_' + __id).empty()
+                $('#objStudent_' + __id).empty()
+            }
+        })
+
+
+        $('#objStudent').find('input[type="checkbox"]').bootstrapSwitch('destroy');
+        $('#objStudent').find('input[type="checkbox"]').bootstrapSwitch();
+    }
+
+    function fn_AbsentAll() {
+        $('#objStudent').find('input[type="checkbox"]').prop('checked', false)
+        $('#objStudent').find('input[type="checkbox"][value="2"]').prop('checked', true)
+        $.each($('#objStudent').find('input[type="checkbox"][value="2"]'), function() {
+            e = this
+            let status = $(e).prop('checked')
+            let value = $(e).val()
+            let __id = $(e).data('id')
+
+            if (status == true) {
+                $('#objStudent_' + __id).empty().append('<input type="hidden" name="student" value="' + __id + '">')
+                $('#objStudent_rmrk_' + __id).empty().append('<input class="form-control remarks" type="text" name="remarks" placeholder="Leave Remarks" />')
+            } else {
+                $('#objStudent_rmrk_' + __id).empty()
+                $('#objStudent_' + __id).empty()
+            }
+        })
+        $('#objStudent').find('input[type="checkbox"]').bootstrapSwitch('destroy');
+        $('#objStudent').find('input[type="checkbox"]').bootstrapSwitch();
+    }
+
+    function fn_ResetAll() {
+        $('#objStudent').find('input[type="checkbox"]').prop('checked', false)
+        $.each($('#objStudent').find('input[type="checkbox"]'), function() {
+            e = this
+            let status = $(e).prop('checked')
+            let value = $(e).val()
+            let __id = $(e).data('id')
+
+            $('#objStudent_rmrk_' + __id).empty()
+            $('#objStudent_' + __id).empty()
+        })
+        $('#objStudent').find('input[type="checkbox"]').bootstrapSwitch('destroy');
+        $('#objStudent').find('input[type="checkbox"]').bootstrapSwitch();
+    }
+</script>
+<script src="{% static 'plugins/bootstrap-switch/js/bootstrap-switch.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'plugins/ladda/spin.min.js' %}"></script>
+<script src="{% static 'plugins/ladda/ladda.min.js' %}"></script>{% endblock %}

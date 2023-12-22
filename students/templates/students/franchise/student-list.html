@@ -1,0 +1,221 @@
+{% extends 'FranchiseBase.html' %}{% load static %} {% load widget_tweaks %} {% block styleArea %}
+<style></style>
+<link href="{% static 'plugins/ladda/ladda-themeless.min.css' %}" rel="stylesheet" />
+<link href="{% static 'css/bootstrap-select.css' %}" rel="stylesheet" /> {% endblock %} {% block contentArea %}
+<div></div>
+
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+        <!-- BEGIN PAGE HEADER-->
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="#">Home</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <a href="#">Student</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <span>Details</span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        <!-- BEGIN PAGE TITLE-->
+        <h1 class="page-title">Students List</h1>
+        <!-- END PAGE TITLE-->
+        <div class="row">
+            <div id="objReport"></div>
+            <div class="col-md-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="actions">
+                            <div class="btn-group btn-group-devided">
+                                <a class="btn red btn-outline" href="{% url 'students:registration' %}">Add New
+                                    Student</a>
+                            </div>
+                            <div class="btn-group btn-group-devided">
+                                <a class="btn red btn-outline" href="{% url 'students:list' %}?{{ request.GET.urlencode }}&active=0">in active</a>
+                            </div>
+                            <div class="btn-group btn-group-devided">
+                                <a class="btn red btn-outline" href="{% url 'students:list' %}?{{ request.GET.urlencode }}active=1">active</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <div class="col-md-6 pull-right">
+                                    <form action="" method="GET">
+                                        <div class="input-group">
+                                            <input type="text" required name="query" value="{{query}}" placeholder="eg. Name" class="form-control" />
+                                            <span class="input-group-btn">
+                                                <input type="submit" class="btn btn-primary" value="Search"
+                                                    id="btnSeach" />
+                                                <a href="{% url 'students:list' %}" class="btn btn-danger"
+                                                    value="Clear">Clear</a>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-12 form-group table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>S. No</th>
+                                            <th>Name</th>
+                                            <th>Profile</th>
+                                            <th>Course</th>
+                                            <th>Mobile</th>
+                                            <th>Status</th>
+                                            <th>Fee </th>
+                                            <th>Joining Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for dt in data %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{% if not dt.is_certified %}<a href="{% url 'students:edit' dt.id %}">
+                                                {{dt.name}} <br>{{dt.code}}</a>{%else%} <span>{{dt.name}} <br>{{dt.code}}</span> {%endif%}
+                                            </td>
+                                            <td>
+                                                {%if dt.profile_image%}
+                                                <img width="70px;" height="70px" src="{{dt.profile_image.url}}" alt="{{dt.name}}">{%else%}<img width="30px;" src="" alt="{{dt.name}}"> {%endif%}
+
+                                            </td>
+
+
+                                            <td>{{dt.course}} <br> <b>{{dt.course.code}}</b></td>
+
+                                            <td>{{dt.mobile_no}}</td>
+                                            <td id="col_{{dt.id}}">{% if not dt.is_certified %}
+                                                <a href="{% url 'students:is_approved' dt.id %}" class="text-danger">Approve
+                                                    Now</a> {% else %}{% if dt.is_admitcard %}{% if dt.is_admitcard_activated %}<span class=" act">{{dt.is_admitcard_Code}} </span> {% else %}
+                                                <a href="javascript:fn_isActivated({{dt.id}})" class="text-danger act">Activate </a>{% endif %} {% else %}<a href="javascript:fn_OpenAdmitMdl({{dt.course.id}},{{dt.id}},{{dt.franchise.id}})" class="rev-card">Admit Card</a>                                                {%endif %} {% endif %}
+                                            </td>
+                                            <td>{% for fe in dt.feeinstallment_set.all %}{{fe.get_installment}} {% endfor %}
+                                            </td>
+                                            <!-- <td><span class="tooltips" data-style="default" data-container="body" data-original-title="{{dt.password}}">{{dt.email}}</span></td> -->
+                                            <td>{{dt.join_date}}</td>
+                                            <td>
+                                                <div class="btn-group mb-3 ml-1"><a target="_blank" href="{% url 'students:student_profile' id=dt.id %}" class="btn btn-info">View</a> {%if dt.is_active%}
+                                                    <a href="{%url 'students:status' id=dt.id type=0%}" class="btn btn-danger">Inactive</a>{%else%}<a href="{%url 'students:status' id=dt.id type=1%}" class="btn btn-success">Active</a>{%endif%} {%if dt.is_drop_out%}
+                                                    <a href="{% url 'students:dropout' id=dt.id type=0 %}" class="btn btn-warning">Back to Class</a>{%else%}<a href="{% url 'students:dropout' id=dt.id type=1 %}" class="btn btn-primary">Drop Out</a>{%endif%}
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                <div class="col-md-12 mt-5">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination justify-content-center">
+                                            {% if page_obj.has_previous %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page=1" tabindex="-1" aria-disabled="true">First</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>
+                                            </li>
+                                            {% else %}
+                                            <li class="page-item disabled">
+                                                <a class="page-link" href="javascript:void()" tabindex="-1" aria-disabled="true">First</a>
+                                            </li>
+                                            <li class="page-item disabled">
+                                                <a class="page-link" href="javascript:void()" tabindex="-1" aria-disabled="true">Previous</a>
+                                            </li>
+                                            {% endif %} {% for page in range %} {% if page_obj.number is page %}
+                                            <li class="page-item active"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+                                            {% else %}
+                                            <li class="page-item"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+                                            {% endif %} {% endfor %} {% if page_obj.has_next %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                                            </li>
+                                            {% else %}
+                                            <li class="page-item disabled">
+                                                <a class="page-link" href="javascript:void()">Next</a>
+                                            </li>
+                                            <li class="page-item disabled">
+                                                <a class="page-link" href="javascript:void()">Last</a>
+                                            </li>
+                                            {% endif %}
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="mldadmitcard" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <form action="">
+                    <input type="hidden" name="" id="txtstudent">
+                    <input type="hidden" name="" id="txtcourse">
+                    <input type="hidden" name="" id="txtfranchise">
+                    <div class="form-group">
+                        <input class="form-control" type="date" name="date" id="txtdate" required="required">
+                    </div>
+                    <select class="form-control" id="ddlexam" required="required">
+                       
+                    </select>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" onclick="fn_SaveMdl()" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end model -->
+
+{% endblock %} {% block scriptArea %}
+
+<script src="{% static 'lib/admitcard.js' %}"></script>
+<script src="{% static 'lib/district.js' %}"></script>
+<script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        $('.req').append('<span style="color:red;">&nbsp;&nbsp;*</span>');
+        $('.nreq').append('<span style="color:red;">&nbsp;&nbsp;</span>');
+    });
+</script>
+<script>
+    $(function() {
+        fn_GetDistrict()
+        $('select').selectpicker({
+            'liveSearch': true
+        });
+    })
+</script>
+
+<script src="{% static 'plugins/ladda/spin.min.js' %}"></script>
+
+<script src="{% static 'plugins/ladda/ladda.min.js' %}"></script>{% endblock %}

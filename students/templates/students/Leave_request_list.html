@@ -1,0 +1,129 @@
+{% extends 'StudentBase.html' %}{% load static %} {% load widget_tweaks %} {% block styleArea %}
+<style></style>
+<link href="{% static 'plugins/ladda/ladda-themeless.min.css' %}" rel="stylesheet" /> {% endblock %} {% block contentArea %}
+<div></div>
+
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+        <!-- BEGIN PAGE HEADER-->
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="#">Home</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <a href="#">Students</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <span>Leave Request List</span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        <!-- BEGIN PAGE TITLE-->
+        <h1 class="page-title">Leave Request List</h1>
+        <!-- END PAGE TITLE-->
+        <div class="row">
+            <div id="objReport"></div>
+            <div class="col-md-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="actions">
+                            <div class="btn-group btn-group-devided">
+                                <a class="btn red btn-outline" href="{% url 'students:st_Leave_request_add' %}">Add Leave
+                                    Request</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="row">
+                            <div class="col-md-12 form-group table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>S. No</th>
+                                            <th>Name</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for dt in data %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>
+                                                <a href="{% url 'students:st_Leave_request_edit' dt.id %}">{{dt.student}}
+                                                    <br>{{dt.student.code}}
+                                                </a>
+                                            </td>
+                                            <td>{{dt.date}}</td>
+                                            <td>{{dt.get_status}}</td>
+                                            <td>{{dt.remarks}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                <!-- <div class="col-md-12 mt-5">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination justify-content-center">
+                                            {% if page_obj.has_previous %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page=1" tabindex="-1" aria-disabled="true">First</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>
+                                            </li>
+                                            {% else %}
+                                            <li class="page-item disabled">
+                                                <a class="page-link" href="javascript:void()" tabindex="-1" aria-disabled="true">First</a>
+                                            </li>
+                                            <li class="page-item disabled">
+                                                <a class="page-link" href="javascript:void()" tabindex="-1" aria-disabled="true">Previous</a>
+                                            </li>
+                                            {% endif %} {% for page in range %} {% if page_obj.number is page %}
+                                            <li class="page-item active"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+                                            {% else %}
+                                            <li class="page-item"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+                                            {% endif %} {% endfor %} {% if page_obj.has_next %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                                            </li>
+                                            {% else %}
+                                            <li class="page-item disabled">
+                                                <a class="page-link" href="javascript:void()">Next</a>
+                                            </li>
+                                            <li class="page-item disabled">
+                                                <a class="page-link" href="javascript:void()">Last</a>
+                                            </li>
+                                            {% endif %}
+                                        </ul>
+                                    </nav>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %} {% block scriptArea %}
+<script></script>
+<script>
+    $(document).ready(function() {
+        $('.req').append('<span style="color:red;">&nbsp;&nbsp;*</span>');
+        $('.nreq').append('<span style="color:red;">&nbsp;&nbsp;</span>');
+    });
+</script>
+
+<script src="{% static 'plugins/ladda/spin.min.js' %}"></script>
+<script src="{% static 'plugins/ladda/ladda.min.js' %}"></script>{% endblock %}

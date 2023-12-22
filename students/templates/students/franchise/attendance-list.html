@@ -1,0 +1,129 @@
+{% extends 'FranchiseBase.html' %}{% load static %} {% load widget_tweaks %} {% load attendance_filter %} {% block styleArea %}
+<style></style>
+<link href="{% static 'plugins/ladda/ladda-themeless.min.css' %}" rel="stylesheet" />
+<link href="{% static 'plugins/bootstrap-switch/css/bootstrap-switch.min.css' %}" rel="stylesheet" type="text/css" /> {% endblock %} {% block contentArea %}
+<div></div>
+
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+        <!-- BEGIN PAGE HEADER-->
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="#">Home</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <a href="#">Student</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <span>Attendance</span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        <!-- BEGIN PAGE TITLE-->
+        <h1 class="page-title">Attendance Details</h1>
+        <!-- END PAGE TITLE-->
+        <div class="row">
+            <div id="objReport"></div>
+            <div class="col-md-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="actions">
+                            <div class="btn-group btn-group-devided">
+                                <a class="btn red btn-outline" href="{% url 'students:attendance_add' %}">Add
+                                    Attendance</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="">
+                            <div class="form-wizard">
+                                <form action="" method="GET" class="form-body" enctype="multipart/form-data">
+                                    <div class="mt-element-card mt-element-overlay" id="objDetails">
+                                        {% if timetable %}
+                                        <div class="row">
+                                            <div class="col-md-3 form-group">
+                                                <label style="display: block;">Timetable</label>
+                                                <select name="timetable" class="form-control">
+                                                    <option value="0">All</option>
+                                                    {% for tt in timetable %}
+                                                    <option value="{{tt.id}}"
+                                                        {% if tt.id|is_ttMatched:tt_id %}selected="selected"
+                                                        {% endif %}>{{tt.start_time}} -
+                                                        {{tt.end_time}}</option>{% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3 form-group">
+                                                <label style="display: block;">Date</label>
+                                                <input type="date" value="{{date}}" name="date" required="required" class="form-control">
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label style="display: block;">&nbsp;</label>
+                                                <button type="submit" id="btnSave" class="btn btn-primary">Filter</button>
+                                                <a href="{% url 'students:attendance_list' %}" class="btn btn-danger">Clear</a>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            {% if student %}
+                                            <div class="col-md-12 form-group table table-responsive">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Student</th>{{1|days:2020|safe}}
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="objAttendance">
+                                                        {% for st in student %}
+                                                        <tr data-id="{{st.student__pk}}">
+                                                            <td>{{st.student__name}} <br>{{st.student__code}}</td>
+                                                            {{1|Studentdays:2020|Studentdays_to_td:st.student__pk|safe}}
+                                                        </tr> {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            {% else %}
+                                            <div class="col-md-6 form-group">
+                                                <div class="alert alert-danger">No data found!</div>
+                                            </div> {% endif %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %} {% block scriptArea %}
+<script></script>
+<script>
+    $(document).ready(function() {
+        $('.req').append('<span style="color:red;">&nbsp;&nbsp;*</span>');
+        $('.nreq').append('<span style="color:red;">&nbsp;&nbsp;</span>');
+
+        $.each($('#objTimetable a'), function() {
+            if ($(this).prop('href') == window.location.href) {
+                $(this).addClass('btn-primary')
+            }
+        })
+
+        '{% if attendance %} {% for att in attendance%} '
+        var day = '{{att.date|date:"d"}}'
+        console.log(day)
+        ' {% for dt in att.attendancedetails_set.all%} '
+        $('#objAttendance').find('tr[data-id="' + "{{dt.student.pk}}" + '"]').find('td[data-day="' + day + '"]').text('{{dt.is_present_str}}')
+
+        ' {% endfor %} {% endfor %} {% endif %}'
+    });
+</script>
+<script src="{% static 'plugins/bootstrap-switch/js/bootstrap-switch.min.js' %}" type="text/javascript"></script>
+{% endblock %}

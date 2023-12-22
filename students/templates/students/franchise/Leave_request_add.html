@@ -1,0 +1,112 @@
+{% extends 'FranchiseBase.html' %}{% load static %} {% load widget_tweaks %} {% block styleArea %}
+<style></style>
+<link href="{% static 'plugins/ladda/ladda-themeless.min.css' %}" rel="stylesheet" /> {% endblock %} {% block contentArea %}
+<div></div>
+
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+        <!-- BEGIN PAGE HEADER-->
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="#">Home</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <a href="#">Students</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <span>Leave Request</span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        <!-- BEGIN PAGE TITLE-->
+        <h1 class="page-title">Leave Request Details</h1>
+        <!-- END PAGE TITLE-->
+        <div class="row">
+            <div id="objReport"></div>
+            <div class="col-md-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-body form">
+                        <div class="">
+                            <div class="form-wizard">
+                                <form action="" method="POST" class="form-body" enctype="multipart/form-data" novalidate>
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            {% if form.non_field_errors %}
+                                            <div class="alert alert-danger" role="alert">
+                                                {% for error in form.non_field_errors %} {{ error }} {% endfor %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-12">
+                                            {% for hidden_field in form.hidden_fields %} {% if hidden_field.errors %}
+                                            <div class="alert alert-danger" role="alert">
+                                                {% for error in hidden_field.errors %}
+                                                <p>(Hidden field {{ hidden_field.name }}) {{ error }}</p>
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %} {{ hidden_field }} {% endfor %}
+                                        </div>
+                                    </div>
+                                    {% for hidden_field in form.hidden_fields %} {{ hidden_field }} {% endfor %}
+
+                                    <div class="row">
+                                        {% for field in form.visible_fields %} {% if form.is_bound %} {% if field.errors %}
+                                        <div class="col-md-4 form-group has-error">
+                                            <label {% if field.field.required %} class="req control-label" {%else%}class="nreq control-label" {%endif%}>{{field.label_tag}}</label> {%render_field field class="form-control" %} {% for error in field.errors%}
+                                            <span class="help-block">{{ error }}</span> {% endfor %} {% if field.help_text %}
+                                            <small class="form-text text-muted">{{ field.help_text }}</small>{%else%}
+                                            <small class="form-text text-muted">&nbsp;&nbsp;</small>{%endif%}
+                                        </div>{% else %}
+                                        <div class="col-md-4 form-group {% if field.field.required %} has-success {% endif %}">
+                                            <label {% if field.field.required %} class="req control-label" {%else%}class="nreq control-label" {%endif%}>{{field.label_tag}}</label> {%render_field field class="form-control" %} {% if field.help_text %}
+                                            <small class="form-text text-muted">{{ field.help_text }}</small> {%else%}
+                                            <small class="form-text text-muted">&nbsp;&nbsp;</small>{%endif%}
+                                            <span class="help-block"> {% if field.field.required %}Looks Good!
+                                                {% else %} &nbsp;&nbsp;&nbsp;
+                                                {% endif %} </span>
+                                        </div>
+                                        {% endif %} {% else %}
+                                        <div class="col-md-4 form-group">
+                                            <label {% if field.field.required %} class="req control-label" {%else%}class="nreq control-label" {%endif%}>{{field.label_tag}}</label> {% render_field field class="form-control" %} {% if field.help_text %}
+                                            <small class="form-text text-muted">{{ field.help_text }}</small>{%else%}
+                                            <small class="form-text text-muted">&nbsp;&nbsp;</small>{%endif%}
+                                        </div>
+                                        {% endif %} {% endfor %}
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <button type="submit" id="btnSave" class="btn btn-primary mt-ladda-btn ladda-button" data-style="expand-left" data-spinner-color="#ccc">
+                                                <span class="ladda-label">Save</span> <span
+                                                    class="ladda-spinner"></span>
+                                                <div class="ladda-progress" style="width: 0px;"></div>
+                                            </button>
+                                            <a href="{% url 'students:Leave_request_add' %}" class="btn btn-danger">Clear</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %} {% block scriptArea %}
+<script></script>
+<script>
+    $(document).ready(function() {
+        $('.req').append('<span style="color:red;">&nbsp;&nbsp;*</span>');
+        $('.nreq').append('<span style="color:red;">&nbsp;&nbsp;</span>');
+    });
+</script>
+<script src="{% static 'plugins/ladda/spin.min.js' %}"></script>
+<script src="{% static 'plugins/ladda/ladda.min.js' %}"></script>{% endblock %}
